@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import IvaCommunicator from './iva_communicator/ivaCommunicator';
+import CommandHandler from './iva_communicator/commandHandler';
 
-interface AppProps {}
+interface AppProps {
+}
 
 function App({}: AppProps) {
+  console.log('test')
+  const commandHandler = new CommandHandler()
+  const communicator = new IvaCommunicator("ws://127.0.0.1:5678/", commandHandler)
   // Create the count state.
   const [count, setCount] = useState(0);
   // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setCount(count + 1), 1000);
+  //   return () => clearTimeout(timer);
+  // }, [count, setCount]);
   // Return the App component.
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className='App'>
+      <header className='App-header'>
+        <img src={logo} className='App-logo' alt='logo' />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -25,10 +31,10 @@ function App({}: AppProps) {
         </p>
         <p>
           <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+            className='App-link'
+            href='https://reactjs.org'
+            target='_blank'
+            rel='noopener noreferrer'
           >
             Learn React
           </a>
