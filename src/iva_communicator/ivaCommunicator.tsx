@@ -14,17 +14,16 @@ class IvaCommunicator {
   private ws: WebSocket;
 
   constructor(url: string, commandHandler: CommandHandler) {
-    console.log("cons")
     this.commandHandler = commandHandler;
     this.ws = new WebSocket(url);
     this.ws.onopen = (event) => {
       console.log(event)
       //this.sendTest();
       console.log('on open');
-      // this.sendEcho().then((data) => {
-      //   console.log('promise data');
-      //   console.log(data);
-      // });
+      this.sendEcho().then((data) => {
+        console.log('promise data');
+        console.log(data);
+      });
     };
 
     this.ws.onmessage = (event) => {
