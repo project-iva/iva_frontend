@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import type CommandHandler from './commandHandler';
 import { WebSocketMessage, WebSocketMessageAction, WebSocketMessageType } from './webSocketMessage';
+import type { MorningRoutineState } from './morningRoutineState';
 
 interface ExpectedResponse {
   action: WebSocketMessageAction
@@ -17,13 +18,7 @@ class IvaCommunicator {
     this.commandHandler = commandHandler;
     this.ws = new WebSocket(url);
     this.ws.onopen = (event) => {
-      console.log(event)
-      //this.sendTest();
-      console.log('on open');
-      this.sendEcho().then((data) => {
-        console.log('promise data');
-        console.log(data);
-      });
+      console.log(event);
     };
 
     this.ws.onmessage = (event) => {
@@ -50,8 +45,22 @@ class IvaCommunicator {
     }
 
     // Handle actions which are not expected responses
-    if (message.action === WebSocketMessageAction.TEST) {
-      this.commandHandler.testAction(message.data);
+    switch (message.action) {
+      case WebSocketMessageAction.TEST: {
+        this.commandHandler.testAction(message.data);
+        break;
+      }
+
+      case WebSocketMessageAction.MORNING_ROUTINE_UPDATE: {
+        this.commandHandler.morningRoutineStateUpdated(message.data as MorningRoutineState)
+        break;
+      }
+
+      case WebSocketMessageAction.MORNING_ROUTINE_FINISHED: {
+        this.commandHandler.morningRoutineFinished()
+        break;
+      }
+
     }
   }
 

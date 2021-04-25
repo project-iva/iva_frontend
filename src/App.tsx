@@ -2,12 +2,13 @@ import './App.scss';
 import React, { Component } from 'react';
 import IvaCommunicator from './iva_communicator/ivaCommunicator';
 import CommandHandler from './iva_communicator/commandHandler';
-import {  Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
+import { MorningRoutineState } from './iva_communicator/morningRoutineState';
 
 type AppProps = {};
 
 type AppState = {
-  show: boolean;
+  morningRoutineState: MorningRoutineState | null;
 };
 
 class App extends Component<AppProps, AppState> {
@@ -15,11 +16,8 @@ class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      show: true,
-    } as AppState;
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+      morningRoutineState: null,
+    };
   }
 
   componentDidMount() {
@@ -27,34 +25,26 @@ class App extends Component<AppProps, AppState> {
     const communicator = new IvaCommunicator('ws://127.0.0.1:5678/', commandHandler);
   }
 
-  showMorningModal() {
-
+  morningRoutineStateUpdated(state: MorningRoutineState) {
+    this.setState({
+      morningRoutineState: state,
+    });
   }
 
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  handleClose() {
-    this.setState({ show: false });
+  morningRoutineFinished() {
+    this.setState({
+      morningRoutineState: null,
+    });
   }
 
   render() {
     return (
       <>
-        <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
+        <Modal show={this.state.morningRoutineState != null} animation={false}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>{this.state.morningRoutineState?.step.title}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant='secondary' onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant='primary' onClick={this.handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
+          <Modal.Body>{this.state.morningRoutineState?.step.description}</Modal.Body>
         </Modal>
       </>
     );

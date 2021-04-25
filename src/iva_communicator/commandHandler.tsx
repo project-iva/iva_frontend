@@ -1,8 +1,26 @@
+import type App from '../App';
+import type { MorningRoutineState } from './morningRoutineState';
+
 class CommandHandler {
-    testAction(data: any) {
-        console.log("performing test action")
-        console.log(data)
-    }
+  private app: App;
+
+  constructor(app: App) {
+    this.app = app
+  }
+
+  morningRoutineStateUpdated(state: MorningRoutineState) {
+    console.log(state)
+    this.app.morningRoutineStateUpdated(state)
+  }
+
+  morningRoutineFinished() {
+    this.app.morningRoutineFinished()
+  }
+
+  testAction(data: any) {
+    console.log('performing test action');
+    console.log(data);
+  }
 }
 
-export default CommandHandler
+export default CommandHandler;
