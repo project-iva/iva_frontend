@@ -1,39 +1,62 @@
+import './App.scss';
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import IvaCommunicator from './iva_communicator/ivaCommunicator';
 import CommandHandler from './iva_communicator/commandHandler';
+import {  Modal, Button } from 'react-bootstrap';
 
-class App extends Component<{}, {}> {
+type AppProps = {};
+
+type AppState = {
+  show: boolean;
+};
+
+class App extends Component<AppProps, AppState> {
+
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      show: true,
+    } as AppState;
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
 
   componentDidMount() {
-    const commandHandler = new CommandHandler();
+    const commandHandler = new CommandHandler(this);
     const communicator = new IvaCommunicator('ws://127.0.0.1:5678/', commandHandler);
+  }
+
+  showMorningModal() {
+
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
+
+  handleClose() {
+    this.setState({ show: false });
   }
 
   render() {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <p>
-            Page has been open for <code>{0}</code> seconds.
-          </p>
-          <p>
-            <a
-              className='App-link'
-              href='https://reactjs.org'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Learn React
-            </a>
-          </p>
-        </header>
-      </div>
+      <>
+        <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant='secondary' onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant='primary' onClick={this.handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     );
   }
 }
