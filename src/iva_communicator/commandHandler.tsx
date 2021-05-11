@@ -5,16 +5,16 @@ class CommandHandler {
   private app: App;
 
   constructor(app: App) {
-    this.app = app
+    this.app = app;
   }
 
   morningRoutineStateUpdated(state: MorningRoutineState) {
-    console.log(state)
-    this.app.morningRoutineStateUpdated(state)
+    console.log(state);
+    this.app.morningRoutineStateUpdated(state);
   }
 
   morningRoutineFinished() {
-    this.app.morningRoutineFinished()
+    this.app.morningRoutineFinished();
   }
 
   testAction(data: any) {
