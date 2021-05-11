@@ -1,10 +1,11 @@
-export interface RoutineStep {
-  title: string
-  description: string
-  icon: string
+export class RoutineStep {
+  constructor(
+    readonly title: string,
+    readonly description: string,
+    readonly icon: string,
+  ) {}
 }
 
-export interface Routine {
-  name: string
-  steps: Array<RoutineStep>
+export class Routine {
+  constructor(readonly name: string, readonly steps: Array<RoutineStep>) {}
 }

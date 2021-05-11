@@ -6,8 +6,9 @@ export enum WebSocketMessageType {
 export enum WebSocketMessageAction {
   TEST = 'test',
   ECHO = 'echo',
-  MORNING_ROUTINE_UPDATE = 'morning_routine_update',
-  MORNING_ROUTINE_FINISHED = 'morning_routine_finished',
+  START_ROUTINE = 'start_routine',
+  NEXT_STEP_IN_ROUTINE = 'next_step_in_routine',
+  FINISH_ROUTINE = 'finish_routine',
 }
 
 export interface WebSocketMessage {

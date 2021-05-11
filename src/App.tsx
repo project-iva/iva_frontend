@@ -2,21 +2,18 @@ import './App.scss'
 import React, { Component } from 'react'
 import IvaCommunicator from './iva_communicator/ivaCommunicator'
 import CommandHandler from './iva_communicator/commandHandler'
-import { Modal } from 'react-bootstrap'
-import { MorningRoutineState } from './iva_communicator/morningRoutineState'
+import RoutineModal from './components/routineModal'
 
 type AppProps = {}
 
-type AppState = {
-  morningRoutineState: MorningRoutineState | null
-}
+type AppState = {}
 
 class App extends Component<AppProps, AppState> {
+  private readonly routineModal: React.RefObject<RoutineModal>
+
   constructor(props: AppProps) {
     super(props)
-    this.state = {
-      morningRoutineState: null,
-    }
+    this.routineModal = React.createRef()
   }
 
   componentDidMount() {
@@ -27,31 +24,22 @@ class App extends Component<AppProps, AppState> {
     )
   }
 
-  morningRoutineStateUpdated(state: MorningRoutineState) {
-    this.setState({
-      morningRoutineState: state,
-    })
+  startRoutine(routineName: string) {
+    this.routineModal.current?.startRoutine(routineName)
   }
 
-  morningRoutineFinished() {
-    this.setState({
-      morningRoutineState: null,
-    })
+  goToNextRoutineStep() {
+    this.routineModal.current?.nextStep()
+  }
+
+  finishRoutine() {
+    this.routineModal.current?.finishRoutine()
   }
 
   render() {
     return (
       <>
-        <Modal show={this.state.morningRoutineState != null} animation={false}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              {this.state.morningRoutineState?.step.title}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {this.state.morningRoutineState?.step.description}
-          </Modal.Body>
-        </Modal>
+        <RoutineModal ref={this.routineModal} />
       </>
     )
   }

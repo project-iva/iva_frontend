@@ -1,5 +1,5 @@
 import type App from '../App'
-import type { MorningRoutineState } from './morningRoutineState'
+import StartRoutineCommandData from './startRoutineCommandData'
 
 class CommandHandler {
   private app: App
@@ -8,13 +8,17 @@ class CommandHandler {
     this.app = app
   }
 
-  morningRoutineStateUpdated(state: MorningRoutineState) {
-    console.log(state)
-    this.app.morningRoutineStateUpdated(state)
+  startRoutine(data: StartRoutineCommandData) {
+    console.log(data)
+    this.app.startRoutine(data.routine_name)
   }
 
-  morningRoutineFinished() {
-    this.app.morningRoutineFinished()
+  goToNextRoutineStep() {
+    this.app.goToNextRoutineStep()
+  }
+
+  finishRoutine() {
+    this.app.finishRoutine()
   }
 
   testAction(data: any) {

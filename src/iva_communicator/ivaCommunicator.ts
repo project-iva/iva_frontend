@@ -5,7 +5,7 @@ import {
   WebSocketMessageAction,
   WebSocketMessageType,
 } from './webSocketMessage'
-import type { MorningRoutineState } from './morningRoutineState'
+import StartRoutineCommandData from './startRoutineCommandData'
 
 interface ExpectedResponse {
   action: WebSocketMessageAction
@@ -58,15 +58,20 @@ class IvaCommunicator {
         break
       }
 
-      case WebSocketMessageAction.MORNING_ROUTINE_UPDATE: {
-        this.commandHandler.morningRoutineStateUpdated(
-          message.data as MorningRoutineState,
+      case WebSocketMessageAction.START_ROUTINE: {
+        this.commandHandler.startRoutine(
+          message.data as StartRoutineCommandData,
         )
         break
       }
 
-      case WebSocketMessageAction.MORNING_ROUTINE_FINISHED: {
-        this.commandHandler.morningRoutineFinished()
+      case WebSocketMessageAction.NEXT_STEP_IN_ROUTINE: {
+        this.commandHandler.goToNextRoutineStep()
+        break
+      }
+
+      case WebSocketMessageAction.FINISH_ROUTINE: {
+        this.commandHandler.finishRoutine()
         break
       }
     }
