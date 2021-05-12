@@ -14,5 +14,5 @@ export class RoutineStep {
 }
 
 export class Routine {
-  constructor(readonly name: string, readonly steps: Array<RoutineStep>) {}
+  constructor(readonly steps: Array<RoutineStep>) {}
 }

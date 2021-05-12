@@ -5,6 +5,7 @@ import morningRoutine from '../routines/morningRoutine'
 import finishedStep from '../routines/finishedStep'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import eveningRoutine from '../routines/eveningRoutine'
 
 type RoutineModalProps = {}
 
@@ -15,13 +16,14 @@ type RoutineModalState = {
 
 class RoutineModal extends Component<RoutineModalProps, RoutineModalState> {
   private routines: Map<string, Routine>
-  private finishedStep: RoutineStep
+  private readonly finishedStep: RoutineStep
 
   constructor(props: RoutineModalProps) {
     super(props)
 
     this.routines = new Map<string, Routine>([
       ['morning_routine', morningRoutine],
+      ['evening_routine', eveningRoutine],
     ])
 
     this.finishedStep = finishedStep
@@ -30,10 +32,6 @@ class RoutineModal extends Component<RoutineModalProps, RoutineModalState> {
       routine: undefined,
       step: 0,
     }
-  }
-
-  componentDidMount() {
-    this.startRoutine('morning_routine')
   }
 
   startRoutine(routineName: string) {

@@ -3,6 +3,8 @@ import {
   faCloudSun,
   faGlassWhiskey,
   faBrain,
+  faJournalWhills,
+  faList,
 } from '@fortawesome/free-solid-svg-icons'
 
 const morningSteps = [
@@ -18,7 +20,15 @@ const morningSteps = [
     icon: faBrain,
     color: 'SlateGrey',
   }),
+  new RoutineStep('TODOs', 'Prepare a list of TODOs for the day', {
+    icon: faList,
+    color: 'DarkGray',
+  }),
+  new RoutineStep('Journal', 'Write/sketch for a few minutes', {
+    icon: faJournalWhills,
+    color: 'Maroon',
+  }),
 ]
 
-const morningRoutine = new Routine('morning_routine', morningSteps)
+const morningRoutine = new Routine(morningSteps)
 export default morningRoutine
