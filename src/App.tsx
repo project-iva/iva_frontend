@@ -1,4 +1,4 @@
-import './App.scss'
+import './styles/style.scss'
 import React, { Component } from 'react'
 import IvaCommunicator from './iva_communicator/ivaCommunicator'
 import CommandHandler from './iva_communicator/commandHandler'

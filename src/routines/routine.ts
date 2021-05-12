@@ -1,8 +1,15 @@
+import { IconDefinition } from '@fortawesome/fontawesome-common-types'
+
+interface RoutineStepIcon {
+  icon: IconDefinition
+  color: string
+}
+
 export class RoutineStep {
   constructor(
     readonly title: string,
     readonly description: string,
-    readonly icon: string,
+    readonly icon: RoutineStepIcon,
   ) {}
 }
 

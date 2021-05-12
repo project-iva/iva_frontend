@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap'
 import { Routine, RoutineStep } from '../routines/routine'
 import morningRoutine from '../routines/morningRoutine'
 import finishedStep from '../routines/finishedStep'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 
 type RoutineModalProps = {}
 
@@ -28,6 +30,10 @@ class RoutineModal extends Component<RoutineModalProps, RoutineModalState> {
       routine: undefined,
       step: 0,
     }
+  }
+
+  componentDidMount() {
+    this.startRoutine('morning_routine')
   }
 
   startRoutine(routineName: string) {
@@ -67,11 +73,25 @@ class RoutineModal extends Component<RoutineModalProps, RoutineModalState> {
     const currentStep = this.getCurrentStep()
     return (
       <>
-        <Modal show={currentStep != null} animation={false}>
-          <Modal.Header closeButton>
-            <Modal.Title>{currentStep?.title}</Modal.Title>
+        <Modal
+          show={currentStep != null}
+          animation={false}
+          centered
+          className={'routineModal'}
+        >
+          <Modal.Header className={'header'}>
+            <Modal.Title>
+              <h1>{currentStep?.title}</h1>
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>{currentStep?.description}</Modal.Body>
+          <Modal.Body className={'body'}>
+            <h6>{currentStep?.description}</h6>
+            <FontAwesomeIcon
+              size="10x"
+              icon={currentStep?.icon.icon || faQuestion}
+              color={currentStep?.icon.color}
+            />
+          </Modal.Body>
         </Modal>
       </>
     )
