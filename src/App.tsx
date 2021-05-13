@@ -19,7 +19,7 @@ class App extends Component<AppProps, AppState> {
   componentDidMount() {
     const commandHandler = new CommandHandler(this)
     const communicator = new IvaCommunicator(
-      'ws://127.0.0.1:5678/',
+      'ws://127.0.0.1:5678/web',
       commandHandler,
     )
   }
