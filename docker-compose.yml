@@ -6,5 +6,17 @@ services:
           dockerfile: Dockerfile
       volumes:
         - .:/usr/src/app/
+
       ports:
         - 3000:3000
+
+      labels:
+        - traefik.enable=true
+        - traefik.frontend.rule=Host:iva.docker.localhost
+        - traefik.docker.network=iva_frontend
+      networks:
+        - iva_network
+
+networks:
+  iva_network:
+    name: iva_network
