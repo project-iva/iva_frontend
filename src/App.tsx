@@ -39,6 +39,13 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <>
+        <div className={'container h-100'}>
+          <div
+            className={'row h-100 justify-content-center align-items-center'}
+          >
+            <h1 className={'iva-title'}>IVA</h1>
+          </div>
+        </div>
         <RoutineModal ref={this.routineModal} />
       </>
     )

@@ -76,6 +76,7 @@ class RoutineModal extends Component<RoutineModalProps, RoutineModalState> {
           animation={false}
           centered
           className={'routineModal'}
+          contentClassName={'content'}
         >
           <Modal.Header className={'header'}>
             <Modal.Title>
