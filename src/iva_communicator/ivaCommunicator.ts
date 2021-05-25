@@ -16,13 +16,30 @@ interface ExpectedResponse {
 class IvaCommunicator {
   private expectedResponses = new Map<string, ExpectedResponse>()
   private commandHandler: CommandHandler
-  private ws: WebSocket
+  private ws: WebSocket | undefined
+  private readonly websocketUrl: string
 
   constructor(url: string, commandHandler: CommandHandler) {
     this.commandHandler = commandHandler
-    this.ws = new WebSocket(url)
+    this.websocketUrl = url
+    this.connectToWebsocket()
+  }
+
+  private connectToWebsocket() {
+    this.ws = new WebSocket(this.websocketUrl)
     this.ws.onopen = (event) => {
       console.log(event)
+    }
+
+    this.ws.onerror = (error) => {
+      console.log(error)
+    }
+
+    this.ws.onclose = (event) => {
+      console.log(event)
+      setTimeout(() => {
+        this.connectToWebsocket()
+      }, 1000)
     }
 
     this.ws.onmessage = (event) => {
@@ -85,7 +102,7 @@ class IvaCommunicator {
     } as WebSocketMessage
 
     const j = JSON.stringify(test_data)
-    this.ws.send(j)
+    this.ws?.send(j)
   }
 
   private sendEcho() {
@@ -108,7 +125,7 @@ class IvaCommunicator {
       this.expectedResponses.set(test_data.id, expectedResponse)
 
       const j = JSON.stringify(test_data)
-      this.ws.send(j)
+      this.ws?.send(j)
     })
   }
 }
