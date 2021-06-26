@@ -1,4 +1,4 @@
-import type App from '../App'
+import { App } from '../App'
 import StartRoutineCommandData from './startRoutineCommandData'
 
 class CommandHandler {
