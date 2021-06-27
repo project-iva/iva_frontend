@@ -14,13 +14,13 @@ interface MindfulSession {
 
 type MindfulSessionsData = MindfulSession[]
 
-interface MindfulSessionSliceState {
+interface MindfulSessionsSliceState {
   mindfulSessions: MindfulSessionsData
   status: 'idle' | 'pending' | 'succeeded' | 'failed'
   error: SerializedError | null
 }
 
-const initialState: MindfulSessionSliceState = {
+const initialState: MindfulSessionsSliceState = {
   mindfulSessions: [],
   status: 'idle',
   error: null,

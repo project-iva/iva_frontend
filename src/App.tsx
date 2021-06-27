@@ -4,16 +4,23 @@ import IvaCommunicator from './iva_communicator/ivaCommunicator'
 import CommandHandler from './iva_communicator/commandHandler'
 import RoutineModal from './components/routineModal'
 import { connect, ConnectedProps } from 'react-redux'
-import type { RootState, AppDispatch } from './store/store'
+import type { AppDispatch, RootState } from './store/store'
 import { fetchMindfulSessions } from './store/mindfulSessionsSlice'
+import { fetchSleepAnalyses } from './store/sleepAnalysesSlice'
 import { bindActionCreators } from 'redux'
 
 const mapStateToProps = (state: RootState) => {
-  return { mindfulSessions: state.mindfulSessions }
+  return {
+    mindfulSessions: state.mindfulSessions,
+    sleepAnalyses: state.sleepAnalyses,
+  }
 }
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
-  return bindActionCreators({ fetchMindfulSessions }, dispatch)
+  return bindActionCreators(
+    { fetchMindfulSessions, fetchSleepAnalyses },
+    dispatch,
+  )
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -32,11 +39,19 @@ export class App extends Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    let s = this.props.mindfulSessions
-    console.log(s)
+    console.log({
+      mindfulSessions: this.props.mindfulSessions,
+      sleepAnalyses: this.props.sleepAnalyses,
+    })
+
     this.props.fetchMindfulSessions()
+    this.props.fetchSleepAnalyses()
+
     setTimeout(() => {
-      console.log(this.props.mindfulSessions)
+      console.log({
+        mindfulSessions: this.props.mindfulSessions,
+        sleepAnalyses: this.props.sleepAnalyses,
+      })
     }, 1000)
 
     const commandHandler = new CommandHandler(this)
