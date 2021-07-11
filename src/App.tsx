@@ -2,21 +2,33 @@ import './styles/style.scss'
 import React, { Component } from 'react'
 import IvaCommunicator from './iva_communicator/ivaCommunicator'
 import CommandHandler from './iva_communicator/commandHandler'
-import RoutineModal from './components/routineModal'
 import { MindfulSessionsOverview } from './views/MindfulSessionsOverview'
 import { SleepAnalysesOverview } from './views/SleepAnalysesOverview'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { Dashboard } from './views/Dashboard'
+import MealChoicePresenter from './components/presenter/mealChoicePresenter'
+import { PresenterSessionType } from './iva_communicator/presenterCommands'
+import Presenter from './components/presenter/presenter'
+import RoutinePresenter from './components/presenter/routinePresenter'
 
 type AppProps = {}
 type AppState = {}
+type PresenterReference = React.RefObject<Presenter>
 
 class App extends Component<AppProps, AppState> {
-  private readonly routineModal: React.RefObject<RoutineModal>
+  readonly routinePresenter: React.RefObject<RoutinePresenter>
+  readonly mealChoicePresenter: React.RefObject<MealChoicePresenter>
+  presenters: Map<PresenterSessionType, PresenterReference>
 
   constructor(props: AppProps) {
     super(props)
-    this.routineModal = React.createRef()
+    this.routinePresenter = React.createRef()
+    this.mealChoicePresenter = React.createRef()
+
+    this.presenters = new Map<PresenterSessionType, PresenterReference>([
+      [PresenterSessionType.ROUTINE, this.routinePresenter],
+      [PresenterSessionType.MEAL_CHOICES, this.mealChoicePresenter],
+    ])
   }
 
   componentDidMount() {
@@ -25,18 +37,6 @@ class App extends Component<AppProps, AppState> {
       'ws://iva.docker.localhost:5678/web',
       commandHandler,
     )
-  }
-
-  startRoutine(routineName: string) {
-    this.routineModal.current?.startRoutine(routineName)
-  }
-
-  goToNextRoutineStep() {
-    this.routineModal.current?.nextStep()
-  }
-
-  finishRoutine() {
-    this.routineModal.current?.finishRoutine()
   }
 
   render() {
@@ -52,7 +52,8 @@ class App extends Component<AppProps, AppState> {
             <Route path="/" component={Dashboard} />
           </Switch>
         </Router>
-        <RoutineModal ref={this.routineModal} />
+        <RoutinePresenter ref={this.routinePresenter} />
+        <MealChoicePresenter ref={this.mealChoicePresenter} />
       </>
     )
   }

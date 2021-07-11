@@ -1,5 +1,7 @@
 import type App from '../App'
 import StartRoutineCommandData from './startRoutineCommandData'
+import { Meal, PresenterSessionType, RoutineStep } from './presenterCommands'
+import Presenter from '../components/presenter/presenter'
 
 class CommandHandler {
   private app: App
@@ -8,22 +10,32 @@ class CommandHandler {
     this.app = app
   }
 
-  startRoutine(data: StartRoutineCommandData) {
-    console.log(data)
-    this.app.startRoutine(data.routine_name)
+  startMealChoicePresenter(choices: Meal[]) {
+    this.app.mealChoicePresenter.current?.start(choices)
   }
 
-  goToNextRoutineStep() {
-    this.app.goToNextRoutineStep()
+  startRoutinePresenter(steps: RoutineStep[]) {
+    this.app.routinePresenter.current?.start(steps)
   }
 
-  finishRoutine() {
-    this.app.finishRoutine()
+  goToNextItem(sessionType: PresenterSessionType) {
+    this.getPresenter(sessionType)?.nextItem()
   }
 
-  testAction(data: any) {
-    console.log('performing test action')
-    console.log(data)
+  goToPrevItem(sessionType: PresenterSessionType) {
+    this.getPresenter(sessionType)?.prevItem()
+  }
+
+  presenterFinished(sessionType: PresenterSessionType) {
+    this.getPresenter(sessionType)?.finished()
+  }
+
+  private getPresenter(sessionType: PresenterSessionType): Presenter | null {
+    let presenterRef = this.app.presenters.get(sessionType)
+    if (presenterRef) {
+      return presenterRef.current
+    }
+    return null
   }
 }
 

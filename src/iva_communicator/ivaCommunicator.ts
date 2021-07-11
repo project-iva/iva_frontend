@@ -1,11 +1,12 @@
-import { v4 as uuidv4 } from 'uuid'
 import type CommandHandler from './commandHandler'
+import { WebSocketMessage, WebSocketMessageAction } from './webSocketMessage'
 import {
-  WebSocketMessage,
-  WebSocketMessageAction,
-  WebSocketMessageType,
-} from './webSocketMessage'
-import StartRoutineCommandData from './startRoutineCommandData'
+  StartPresenterCommandData,
+  Meal,
+  PresenterSessionType,
+  PresenterNavigationActionData,
+  RoutineStep,
+} from './presenterCommands'
 
 interface ExpectedResponse {
   action: WebSocketMessageAction
@@ -14,7 +15,6 @@ interface ExpectedResponse {
 }
 
 class IvaCommunicator {
-  private expectedResponses = new Map<string, ExpectedResponse>()
   private commandHandler: CommandHandler
   private ws: WebSocket | undefined
   private readonly websocketUrl: string
@@ -52,81 +52,52 @@ class IvaCommunicator {
     console.log('event')
     console.log(message)
 
-    const id = message.id
-    if (this.expectedResponses.has(id)) {
-      const expectedResponse = this.expectedResponses.get(id)!
-      this.expectedResponses.delete(id)
-      // make sure the response parameters are as expected
-      if (
-        expectedResponse.action === message.action &&
-        message.type === WebSocketMessageType.RESPONSE
-      ) {
-        expectedResponse.resolve(message)
-      } else {
-        expectedResponse.reject('Response malformed')
-      }
-      return
-    }
-
     // Handle actions which are not expected responses
     switch (message.action) {
-      case WebSocketMessageAction.TEST: {
-        this.commandHandler.testAction(message.data)
-        break
-      }
-
-      case WebSocketMessageAction.START_ROUTINE: {
-        this.commandHandler.startRoutine(
-          message.data as StartRoutineCommandData,
+      case WebSocketMessageAction.START_PRESENTER: {
+        this.handleStartPresenterCommand(
+          message.data as StartPresenterCommandData,
         )
         break
       }
 
-      case WebSocketMessageAction.NEXT_STEP_IN_ROUTINE: {
-        this.commandHandler.goToNextRoutineStep()
+      case WebSocketMessageAction.NEXT_ITEM_IN_PRESENTER: {
+        let sessionType = (message.data as PresenterNavigationActionData)
+          .session_type
+        this.commandHandler.goToNextItem(sessionType)
         break
       }
 
-      case WebSocketMessageAction.FINISH_ROUTINE: {
-        this.commandHandler.finishRoutine()
+      case WebSocketMessageAction.PREV_ITEM_IN_PRESENTER: {
+        let sessionType = (message.data as PresenterNavigationActionData)
+          .session_type
+        this.commandHandler.goToPrevItem(sessionType)
+        break
+      }
+
+      case WebSocketMessageAction.PRESENTER_FINISHED: {
+        let sessionType = (message.data as PresenterNavigationActionData)
+          .session_type
+        this.commandHandler.presenterFinished(sessionType)
         break
       }
     }
   }
 
-  private sendTest() {
-    const test_data = {
-      id: uuidv4(),
-      type: WebSocketMessageType.REQUEST,
-      action: WebSocketMessageAction.TEST,
-    } as WebSocketMessage
-
-    const j = JSON.stringify(test_data)
-    this.ws?.send(j)
-  }
-
-  private sendEcho() {
-    const test_data = {
-      id: uuidv4(),
-      type: WebSocketMessageType.REQUEST,
-      action: WebSocketMessageAction.ECHO,
-      data: {
-        field1: 'field1_data',
-        field2: 'field2_data',
-      },
-    } as WebSocketMessage
-
-    return new Promise((resolve, reject) => {
-      const expectedResponse = {
-        action: test_data.action,
-        resolve: resolve,
-        reject: reject,
-      } as ExpectedResponse
-      this.expectedResponses.set(test_data.id, expectedResponse)
-
-      const j = JSON.stringify(test_data)
-      this.ws?.send(j)
-    })
+  private handleStartPresenterCommand(data: StartPresenterCommandData) {
+    console.log(data)
+    switch (data.session_type) {
+      case PresenterSessionType.MEAL_CHOICES:
+        let mealChoices = data.items.map((step) => step.data as Meal)
+        console.log(mealChoices)
+        this.commandHandler.startMealChoicePresenter(mealChoices)
+        break
+      case PresenterSessionType.ROUTINE:
+        let routineSteps = data.items.map((step) => step.data as RoutineStep)
+        console.log(routineSteps)
+        this.commandHandler.startRoutinePresenter(routineSteps)
+        break
+    }
   }
 }
 
