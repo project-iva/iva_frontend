@@ -12,7 +12,10 @@ interface MindfulSession {
   end: string
 }
 
-type MindfulSessionsData = MindfulSession[]
+type MindfulSessionsData = {
+  date: string
+  mindful_sessions: MindfulSession[]
+}[]
 
 interface MindfulSessionsSliceState {
   mindfulSessions: MindfulSessionsData
@@ -30,7 +33,7 @@ export const fetchMindfulSessions = createAsyncThunk(
   'mindfulSessions/fetchMindfulSessions',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/mindful-sessions/')
+      .get('http://iva-backend.docker.localhost/api/grouped-mindful-sessions/')
       .then((res) => res)
     return response.data as MindfulSessionsData
   },

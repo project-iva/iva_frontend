@@ -13,7 +13,10 @@ interface SleepAnalysis {
   value: number
 }
 
-type SleepAnalysesData = SleepAnalysis[]
+type SleepAnalysesData = {
+  date: string
+  sleep_analyses: SleepAnalysis[]
+}[]
 
 interface SleepAnalysesSliceState {
   sleepAnalyses: SleepAnalysesData
@@ -31,7 +34,7 @@ export const fetchSleepAnalyses = createAsyncThunk(
   'sleepAnalyses/fetchSleepAnalyses',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/sleep-analyses/')
+      .get('http://iva-backend.docker.localhost/api/grouped-sleep-analyses/')
       .then((res) => res)
     return response.data as SleepAnalysesData
   },
