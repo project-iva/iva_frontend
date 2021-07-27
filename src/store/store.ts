@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import mindfulSessionsReducer from './mindfulSessionsSlice'
 import sleepAnalysesReducer from './sleepAnalysesSlice'
 import bodyMassesReducer from './bodyMassesSlice'
+import assetsReducer from './assetsSlice'
 
 export const store = configureStore({
   reducer: {
     mindfulSessions: mindfulSessionsReducer,
     sleepAnalyses: sleepAnalysesReducer,
     bodyMasses: bodyMassesReducer,
+    assets: assetsReducer,
   },
 })
 

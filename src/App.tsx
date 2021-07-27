@@ -11,6 +11,7 @@ import { PresenterSessionType } from './iva_communicator/presenterCommands'
 import Presenter from './components/presenter/presenter'
 import RoutinePresenter from './components/presenter/routinePresenter'
 import { BodyMassesOverview } from './views/BodyMassesOverview'
+import { AssetsOverview } from './views/AssetsOverview'
 
 type AppProps = {}
 type AppState = {}
@@ -51,6 +52,7 @@ class App extends Component<AppProps, AppState> {
             />
             <Route path="/sleep-analyses" component={SleepAnalysesOverview} />
             <Route path="/body-masses" component={BodyMassesOverview} />
+            <Route path="/assets" component={AssetsOverview} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </Router>
