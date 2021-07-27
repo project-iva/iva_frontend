@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { fetchSleepAnalyses } from '../store/sleepAnalysesSlice'
 import { BarDatum, ResponsiveBar } from '@nivo/bar'
-import { LegendAnchor } from '@nivo/legends'
 type SleepAnalysisDurationAndValue = {
   duration: number
   value: number
