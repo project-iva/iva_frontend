@@ -14,7 +14,6 @@ export const BodyMassesOverview: FunctionComponent = () => {
     }
   }, [bodyMassesStatus, dispatch])
 
-  console.log(bodyMasses)
   const chartData = [
     {
       id: 'Weight',
@@ -28,23 +27,7 @@ export const BodyMassesOverview: FunctionComponent = () => {
         .reverse(),
     },
   ]
-  // const barData = mindfulSessionsData.map((sessionData) => {
-  //   const mindfulSessions = sessionData.mindful_sessions.map((session) => {
-  //     return {
-  //       duration:
-  //         new Date(session.end).getTime() - new Date(session.start).getTime(),
-  //     }
-  //   }) as MindfulSessionDuration[]
-  //   const durationInMillis = mindfulSessions.reduce(
-  //     (sum, mindfulSessionDuration) => sum + mindfulSessionDuration.duration,
-  //     0,
-  //   )
-  //   return {
-  //     date: sessionData.date,
-  //     duration: Math.round((durationInMillis / 1000) * 60), // convert to minutes
-  //   }
-  // }) as BarDatum[]
-  //
+
   const theme = {
     textColor: 'white',
     fontSize: 14,
@@ -68,7 +51,6 @@ export const BodyMassesOverview: FunctionComponent = () => {
     <aside>
       <div style={{ height: '500px' }}>
         <ResponsiveLine {...chartProps} />
-        {/*<ResponsiveBar {...barProps} />*/}
       </div>
     </aside>
   )
