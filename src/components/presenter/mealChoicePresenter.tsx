@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Meal } from '../../iva_communicator/presenterCommands'
 import { PresenterModal } from './presenterModal'
 import Presenter from './presenter'
+import { Meal } from '../../shared_models/food'
 
 type MealChoicePresenterState = {
   choices: Meal[] | undefined

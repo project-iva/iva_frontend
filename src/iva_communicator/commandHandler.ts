@@ -1,7 +1,8 @@
 import type App from '../App'
 import StartRoutineCommandData from './startRoutineCommandData'
-import { Meal, PresenterSessionType, RoutineStep } from './presenterCommands'
+import { PresenterSessionType, RoutineStep } from './presenterCommands'
 import Presenter from '../components/presenter/presenter'
+import { Meal } from '../shared_models/food'
 
 class CommandHandler {
   private app: App

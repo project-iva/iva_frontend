@@ -2,11 +2,11 @@ import type CommandHandler from './commandHandler'
 import { WebSocketMessage, WebSocketMessageAction } from './webSocketMessage'
 import {
   StartPresenterCommandData,
-  Meal,
   PresenterSessionType,
   PresenterNavigationActionData,
   RoutineStep,
 } from './presenterCommands'
+import { Meal } from '../shared_models/food'
 
 interface ExpectedResponse {
   action: WebSocketMessageAction
