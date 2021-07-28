@@ -21,7 +21,6 @@ export const CaloriesGoalOverview: FunctionComponent = () => {
       dispatch(fetchCaloriesGoal())
     }
   }, [caloriesGoalStatus, dispatch])
-  console.log(caloriesGoal)
 
   const caloriesLeft =
     (caloriesGoal?.calories_goal ?? 0) - (caloriesGoal?.calories ?? 0)
