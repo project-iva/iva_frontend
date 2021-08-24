@@ -1,10 +1,10 @@
 import type CommandHandler from './commandHandler'
 import { WebSocketMessage, WebSocketMessageAction } from './webSocketMessage'
 import {
-  StartPresenterCommandData,
-  PresenterSessionType,
   PresenterNavigationActionData,
+  PresenterSessionType,
   RoutineStep,
+  StartPresenterCommandData,
 } from './presenterCommands'
 import { Meal } from '../shared_models/food'
 
@@ -18,14 +18,16 @@ class IvaCommunicator {
   private commandHandler: CommandHandler
   private ws: WebSocket | undefined
   private readonly websocketUrl: string
+  private tryReconnecting: boolean
 
   constructor(url: string, commandHandler: CommandHandler) {
     this.commandHandler = commandHandler
     this.websocketUrl = url
-    this.connectToWebsocket()
+    this.tryReconnecting = false
   }
 
-  private connectToWebsocket() {
+  connect() {
+    this.tryReconnecting = true
     this.ws = new WebSocket(this.websocketUrl)
     this.ws.onopen = (event) => {
       console.log(event)
@@ -37,15 +39,22 @@ class IvaCommunicator {
 
     this.ws.onclose = (event) => {
       console.log(event)
-      setTimeout(() => {
-        this.connectToWebsocket()
-      }, 1000)
+      if (this.tryReconnecting) {
+        setTimeout(() => {
+          this.connect()
+        }, 1000)
+      }
     }
 
     this.ws.onmessage = (event) => {
       const message = JSON.parse(event.data) as WebSocketMessage
       this.handleMessage(message)
     }
+  }
+
+  disconnect() {
+    this.tryReconnecting = false
+    this.ws?.close()
   }
 
   private handleMessage(message: WebSocketMessage) {

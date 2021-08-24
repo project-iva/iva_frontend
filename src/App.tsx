@@ -4,7 +4,7 @@ import IvaCommunicator from './iva_communicator/ivaCommunicator'
 import CommandHandler from './iva_communicator/commandHandler'
 import { MindfulSessionsOverview } from './views/MindfulSessionsOverview'
 import { SleepAnalysesOverview } from './views/SleepAnalysesOverview'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Dashboard } from './views/Dashboard'
 import MealChoicePresenter from './components/presenter/mealChoicePresenter'
 import { PresenterSessionType } from './iva_communicator/presenterCommands'
@@ -13,9 +13,15 @@ import RoutinePresenter from './components/presenter/routinePresenter'
 import { BodyMassesOverview } from './views/BodyMassesOverview'
 import { AssetsOverview } from './views/AssetsOverview'
 import { CaloriesGoalOverview } from './views/CaloriesGoalOverview'
+import { SettingsModal } from './components/settingsModal'
+import { Button } from 'react-bootstrap'
 
 type AppProps = {}
-type AppState = {}
+type AppState = {
+  showSettings: boolean
+  isPresenter: boolean
+}
+
 type PresenterReference = React.RefObject<Presenter>
 
 class App extends Component<AppProps, AppState> {
@@ -23,28 +29,63 @@ class App extends Component<AppProps, AppState> {
   readonly mealChoicePresenter: React.RefObject<MealChoicePresenter>
   presenters: Map<PresenterSessionType, PresenterReference>
 
+  private communicator: IvaCommunicator | null
+
   constructor(props: AppProps) {
     super(props)
     this.routinePresenter = React.createRef()
     this.mealChoicePresenter = React.createRef()
 
+    const commandHandler = new CommandHandler(this)
+    this.communicator = new IvaCommunicator(
+      'ws://iva.docker.localhost:5678/web',
+      commandHandler,
+    )
+
+    this.state = {
+      showSettings: false,
+      isPresenter: true,
+    }
+
     this.presenters = new Map<PresenterSessionType, PresenterReference>([
       [PresenterSessionType.ROUTINE, this.routinePresenter],
       [PresenterSessionType.MEAL_CHOICES, this.mealChoicePresenter],
     ])
+
+    this.handleOnHideSettingsModal = this.handleOnHideSettingsModal.bind(this)
+    this.handleOnIsPresenterChanged = this.handleOnIsPresenterChanged.bind(this)
+    this.handleOnSettingsButtonPressed =
+      this.handleOnSettingsButtonPressed.bind(this)
   }
 
   componentDidMount() {
-    const commandHandler = new CommandHandler(this)
-    const communicator = new IvaCommunicator(
-      'ws://iva.docker.localhost:5678/web',
-      commandHandler,
-    )
+    this.communicator?.connect()
+  }
+
+  private handleOnHideSettingsModal() {
+    this.setState({ showSettings: false })
+  }
+
+  private handleOnIsPresenterChanged(isPresenter: boolean) {
+    this.setState({ isPresenter: isPresenter })
+    console.log(isPresenter)
+    if (isPresenter) {
+      this.communicator?.connect()
+    } else {
+      this.communicator?.disconnect()
+    }
+  }
+
+  private handleOnSettingsButtonPressed() {
+    this.setState({ showSettings: true })
   }
 
   render() {
     return (
       <>
+        <div className={'container-fluid'}>
+          <Button onClick={this.handleOnSettingsButtonPressed}>Settings</Button>
+        </div>
         <Router>
           <Switch>
             <Route
@@ -60,6 +101,12 @@ class App extends Component<AppProps, AppState> {
         </Router>
         <RoutinePresenter ref={this.routinePresenter} />
         <MealChoicePresenter ref={this.mealChoicePresenter} />
+        <SettingsModal
+          show={this.state.showSettings}
+          onHide={this.handleOnHideSettingsModal}
+          isPresenter={this.state.isPresenter}
+          onIsPresenterChanged={this.handleOnIsPresenterChanged}
+        />
       </>
     )
   }
