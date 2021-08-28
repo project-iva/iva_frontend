@@ -15,6 +15,7 @@ import { AssetsOverview } from './views/AssetsOverview'
 import { CaloriesGoalOverview } from './views/CaloriesGoalOverview'
 import { SettingsModal } from './components/settingsModal'
 import { Button } from 'react-bootstrap'
+import { DayPlanOverview } from './views/DayPlanOverview'
 
 type AppProps = {}
 type AppState = {
@@ -44,7 +45,7 @@ class App extends Component<AppProps, AppState> {
 
     this.state = {
       showSettings: false,
-      isPresenter: true,
+      isPresenter: false,
     }
 
     this.presenters = new Map<PresenterSessionType, PresenterReference>([
@@ -59,7 +60,9 @@ class App extends Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    this.communicator?.connect()
+    if (this.state.isPresenter) {
+      this.communicator?.connect()
+    }
   }
 
   private handleOnHideSettingsModal() {
@@ -96,6 +99,7 @@ class App extends Component<AppProps, AppState> {
             <Route path="/body-masses" component={BodyMassesOverview} />
             <Route path="/assets" component={AssetsOverview} />
             <Route path="/calories-goal" component={CaloriesGoalOverview} />
+            <Route path="/day-plan" component={DayPlanOverview} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </Router>
