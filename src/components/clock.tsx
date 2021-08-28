@@ -14,8 +14,10 @@ export const Clock: FunctionComponent = () => {
     return () => clearInterval(interval)
   }, [])
   return (
-    <>
-      <span>{time}</span>
-    </>
+    <div className={'card card-item'}>
+      <div className="card-body text-center">
+        <span className={'display-4'}>{time}</span>
+      </div>
+    </div>
   )
 }
