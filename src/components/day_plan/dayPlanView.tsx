@@ -1,17 +1,22 @@
-import React, { FunctionComponent } from 'react'
-import { DayPlan } from '../../store/dayPlanSlice'
+import React, { FunctionComponent, useEffect } from 'react'
+import { fetchDayPlanActivities } from '../../store/dayPlanSlice'
 import { DayPlanActivityView } from './dayPlanActivityView'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 const Moment = require('moment')
 
-type DayPlanViewProps = {
-  dayPlan: DayPlan
-}
+export const DayPlanView: FunctionComponent = () => {
+  const activities = useAppSelector((state) => state.dayPlan.data)
+  const activitiesStatus = useAppSelector((state) => state.dayPlan.status)
+  const dispatch = useAppDispatch()
 
-export const DayPlanView: FunctionComponent<DayPlanViewProps> = (
-  props: DayPlanViewProps,
-) => {
+  useEffect(() => {
+    if (activitiesStatus === 'idle') {
+      dispatch(fetchDayPlanActivities())
+    }
+  }, [activitiesStatus, dispatch])
+
   const currentTime = new Date()
-  const upcomingActivities = props.dayPlan.activities.filter((activity) => {
+  const upcomingActivities = activities.filter((activity) => {
     const activityEndTime = Moment(activity.end_time, 'HH:mm:ss')
     return activityEndTime > currentTime
   })
@@ -28,24 +33,29 @@ export const DayPlanView: FunctionComponent<DayPlanViewProps> = (
   const upcomingActivitiesViews = upcomingActivities.map((activity) => (
     <DayPlanActivityView key={activity.id} activity={activity} />
   ))
+
   return (
-    <div className={'container-fluid day-plan-container'}>
-      <div className={'row'}>
-        <h2>Current activity: </h2>
+    <div className={'card card-item'}>
+      <div className="card-body">
+        <div className={'container-fluid day-plan-container'}>
+          <div className={'row'}>
+            <h2>Current activity: </h2>
+          </div>
+          {currentActivity ? (
+            <DayPlanActivityView activity={currentActivity} />
+          ) : (
+            <div className={'small text-center'}>No current activity</div>
+          )}
+          <div className={'row'}>
+            <h3>Upcoming activities: </h3>
+          </div>
+          {upcomingActivitiesViews.length > 0 ? (
+            upcomingActivitiesViews
+          ) : (
+            <div className={'small text-center'}>No upcoming activities</div>
+          )}
+        </div>
       </div>
-      {currentActivity ? (
-        <DayPlanActivityView activity={currentActivity} />
-      ) : (
-        <div className={'small text-center'}>No current activity</div>
-      )}
-      <div className={'row'}>
-        <h3>Upcoming activities: </h3>
-      </div>
-      {upcomingActivitiesViews.length > 0 ? (
-        upcomingActivitiesViews
-      ) : (
-        <div className={'small text-center'}>No upcoming activities</div>
-      )}
     </div>
   )
 }

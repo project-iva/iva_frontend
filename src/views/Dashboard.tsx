@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Clock } from '../components/clock'
-import { DayPlanOverview } from './DayPlanOverview'
+import { DayPlanView } from '../components/day_plan/dayPlanView'
 
 export const Dashboard: FunctionComponent = () => {
   return (
@@ -10,7 +10,7 @@ export const Dashboard: FunctionComponent = () => {
           <Clock />
         </div>
         <div className={'col-4'}>
-          <DayPlanOverview />
+          <DayPlanView />
         </div>
       </div>
     </div>

@@ -14,8 +14,6 @@ import { BodyMassesOverview } from './views/BodyMassesOverview'
 import { AssetsOverview } from './views/AssetsOverview'
 import { CaloriesGoalOverview } from './views/CaloriesGoalOverview'
 import { SettingsModal } from './components/settingsModal'
-import { Button } from 'react-bootstrap'
-import { DayPlanOverview } from './views/DayPlanOverview'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -106,7 +104,6 @@ class App extends Component<AppProps, AppState> {
             <Route path="/body-masses" component={BodyMassesOverview} />
             <Route path="/assets" component={AssetsOverview} />
             <Route path="/calories-goal" component={CaloriesGoalOverview} />
-            <Route path="/day-plan" component={DayPlanOverview} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </Router>
