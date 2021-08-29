@@ -86,7 +86,7 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <>
-        <div className={'container-fluid text-right'}>
+        <div className={'container-fluid text-right mb-2'}>
           <FontAwesomeIcon
             className={'mt-2'}
             size="lg"

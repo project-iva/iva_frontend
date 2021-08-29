@@ -5,6 +5,7 @@ import bodyMassesReducer from './bodyMassesSlice'
 import assetsReducer from './assetsSlice'
 import caloriesGoalReducer from './caloriesGoalSlice'
 import dayPlanReducer from './dayPlanSlice'
+import dayGoalsReducer from './dayGoalsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     assets: assetsReducer,
     caloriesGoal: caloriesGoalReducer,
     dayPlan: dayPlanReducer,
+    dayGoals: dayGoalsReducer,
   },
 })
 
