@@ -15,5 +15,11 @@ export const DayPlanOverview: FunctionComponent = () => {
   }, [dayPlanStatus, dispatch])
   console.log(dayPlan)
 
-  return <>{dayPlan && <DayPlanView dayPlan={dayPlan} />}</>
+  return (
+    <div className={'card card-item'}>
+      <div className="card-body">
+        {dayPlan && <DayPlanView dayPlan={dayPlan} />}
+      </div>
+    </div>
+  )
 }

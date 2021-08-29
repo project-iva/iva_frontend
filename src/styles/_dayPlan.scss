@@ -1,0 +1,17 @@
+.day-plan-container {
+}
+
+.day-plan-activity-container {
+  border: 1px solid white;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 8px;
+
+  .time-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: royalblue;
+    border-radius: 8px;
+  }
+}
