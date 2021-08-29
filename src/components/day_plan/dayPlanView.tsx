@@ -37,7 +37,7 @@ export const DayPlanView: FunctionComponent = () => {
   return (
     <div className={'card card-item'}>
       <div className="card-body">
-        <div className={'container-fluid day-plan-container'}>
+        <div className={'container-fluid'}>
           <div className={'row justify-content-center'}>
             <h2>Current activity</h2>
           </div>
