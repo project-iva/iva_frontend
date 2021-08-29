@@ -28,7 +28,7 @@ export const fetchDayGoals = createAsyncThunk(
   'dayGoals/fetchDayGoals',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/day-goal/2021-08-09/')
+      .get('http://iva-backend.docker.localhost/api/current-day-goals/')
       .then((res) => res)
     return response.data['goals'] as DayGoal[]
   },

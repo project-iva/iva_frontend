@@ -1,0 +1,12 @@
+.day-goal-container {
+  border: 1px solid white;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 8px;
+
+  .checkbox-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
