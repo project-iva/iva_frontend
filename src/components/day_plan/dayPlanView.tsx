@@ -38,16 +38,16 @@ export const DayPlanView: FunctionComponent = () => {
     <div className={'card card-item'}>
       <div className="card-body">
         <div className={'container-fluid day-plan-container'}>
-          <div className={'row'}>
-            <h2>Current activity: </h2>
+          <div className={'row justify-content-center'}>
+            <h2>Current activity</h2>
           </div>
           {currentActivity ? (
             <DayPlanActivityView activity={currentActivity} />
           ) : (
             <div className={'small text-center'}>No current activity</div>
           )}
-          <div className={'row'}>
-            <h3>Upcoming activities: </h3>
+          <div className={'row justify-content-center'}>
+            <h3>Upcoming activities</h3>
           </div>
           {upcomingActivitiesViews.length > 0 ? (
             upcomingActivitiesViews
