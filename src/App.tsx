@@ -16,6 +16,8 @@ import { CaloriesGoalOverview } from './views/CaloriesGoalOverview'
 import { SettingsModal } from './components/settingsModal'
 import { Button } from 'react-bootstrap'
 import { DayPlanOverview } from './views/DayPlanOverview'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 type AppProps = {}
 type AppState = {
@@ -86,8 +88,13 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <>
-        <div className={'container-fluid'}>
-          <Button onClick={this.handleOnSettingsButtonPressed}>Settings</Button>
+        <div className={'container-fluid text-right'}>
+          <FontAwesomeIcon
+            className={'mt-2'}
+            size="lg"
+            icon={faCog}
+            onClick={this.handleOnSettingsButtonPressed}
+          />
         </div>
         <Router>
           <Switch>
