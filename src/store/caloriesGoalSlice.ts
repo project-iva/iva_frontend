@@ -14,6 +14,9 @@ interface MealTrackerEntry {
 interface CaloriesGoal {
   calories: number
   calories_goal: number
+  protein: number
+  fat: number
+  carbs: number
   entries: MealTrackerEntry[]
 }
 

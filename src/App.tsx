@@ -12,7 +12,6 @@ import Presenter from './components/presenter/presenter'
 import RoutinePresenter from './components/presenter/routinePresenter'
 import { BodyMassesOverview } from './views/BodyMassesOverview'
 import { AssetsOverview } from './views/AssetsOverview'
-import { CaloriesGoalOverview } from './views/CaloriesGoalOverview'
 import { SettingsModal } from './components/settingsModal'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -103,7 +102,6 @@ class App extends Component<AppProps, AppState> {
             <Route path="/sleep-analyses" component={SleepAnalysesOverview} />
             <Route path="/body-masses" component={BodyMassesOverview} />
             <Route path="/assets" component={AssetsOverview} />
-            <Route path="/calories-goal" component={CaloriesGoalOverview} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </Router>
