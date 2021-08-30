@@ -3,6 +3,7 @@ import mindfulSessionsReducer from './mindfulSessionsSlice'
 import sleepAnalysesReducer from './sleepAnalysesSlice'
 import bodyMassesReducer from './bodyMassesSlice'
 import assetsReducer from './assetsSlice'
+import assetsDayPriceChangeReducer from './assetsDayPriceChangeSlice'
 import caloriesGoalReducer from './caloriesGoalSlice'
 import dayPlanReducer from './dayPlanSlice'
 import dayGoalsReducer from './dayGoalsSlice'
@@ -13,6 +14,7 @@ export const store = configureStore({
     sleepAnalyses: sleepAnalysesReducer,
     bodyMasses: bodyMassesReducer,
     assets: assetsReducer,
+    assetsDayPriceChange: assetsDayPriceChangeReducer,
     caloriesGoal: caloriesGoalReducer,
     dayPlan: dayPlanReducer,
     dayGoals: dayGoalsReducer,

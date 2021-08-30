@@ -36,7 +36,7 @@ const initialState: AssetsSliceState = {
 
 export const fetchAssets = createAsyncThunk('assets/fetchAssets', async () => {
   const response = await axios
-    .get('http://iva-backend.docker.localhost/api/assets/')
+    .get('http://iva-backend.docker.localhost/api/asset-tracker-entries/')
     .then((res) => res)
   return response.data as AssetTrackerData[]
 })
