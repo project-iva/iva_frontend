@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import mindfulSessionsReducer from './mindfulSessionsSlice'
 import sleepAnalysesReducer from './sleepAnalysesSlice'
 import bodyMassesReducer from './bodyMassesSlice'
+import bodyMassStatsReducer from './bodyMassStatsSlice'
 import assetsReducer from './assetsSlice'
 import assetsDayPriceChangeReducer from './assetsDayPriceChangeSlice'
 import caloriesGoalReducer from './caloriesGoalSlice'
@@ -13,6 +14,7 @@ export const store = configureStore({
     mindfulSessions: mindfulSessionsReducer,
     sleepAnalyses: sleepAnalysesReducer,
     bodyMasses: bodyMassesReducer,
+    bodyMassStats: bodyMassStatsReducer,
     assets: assetsReducer,
     assetsDayPriceChange: assetsDayPriceChangeReducer,
     caloriesGoal: caloriesGoalReducer,
