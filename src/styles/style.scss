@@ -9,4 +9,13 @@
 @import "cardItem";
 @import "dayPlan";
 @import "dayGoal";
-@import "assets";
+
+.gain-text {
+  color: mediumseagreen;
+  fill: mediumseagreen;
+}
+
+.loss-text {
+  color: indianred;
+  fill: indianred;
+}
