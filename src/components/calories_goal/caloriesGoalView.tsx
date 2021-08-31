@@ -35,11 +35,13 @@ export const CaloriesGoalView: FunctionComponent = () => {
               caloriesGoal={caloriesGoal.calories_goal}
               consumedCalories={caloriesGoal.calories}
             />
-            <ConsumedCaloriesNutritionView
-              protein={caloriesGoal.protein}
-              fat={caloriesGoal.fat}
-              carbs={caloriesGoal.carbs}
-            />
+            {caloriesGoal.calories > 0 && (
+              <ConsumedCaloriesNutritionView
+                protein={caloriesGoal.protein}
+                fat={caloriesGoal.fat}
+                carbs={caloriesGoal.carbs}
+              />
+            )}
           </div>
         ) : (
           <div className={'small text-center'}>No calories goal</div>
