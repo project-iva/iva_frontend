@@ -23,7 +23,6 @@ export const CaloriesGoalView: FunctionComponent = () => {
       dispatch(fetchCaloriesGoal())
     }
   }, [caloriesGoalStatus, dispatch])
-  console.log(caloriesGoal)
 
   return (
     <div className={'card card-item'}>

@@ -28,7 +28,6 @@ export const DayPlanView: FunctionComponent = () => {
   ) {
     currentActivity = upcomingActivities.shift()
   }
-  console.log(upcomingActivities)
 
   const upcomingActivitiesViews = upcomingActivities.map((activity) => (
     <DayPlanActivityView key={activity.id} activity={activity} />

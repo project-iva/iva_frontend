@@ -29,8 +29,6 @@ export const CaloriesTrackingView: FunctionComponent<CaloriesTrackingViewProps> 
       },
     ] as CaloriesChartData[]
 
-    console.log(caloriesData)
-
     const centeredMetric = ({
       centerX,
       centerY,

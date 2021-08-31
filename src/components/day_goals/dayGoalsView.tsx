@@ -14,8 +14,6 @@ export const DayGoalsView: FunctionComponent = () => {
     }
   }, [goalsStatus, dispatch])
 
-  console.log(goals)
-
   const goalViews = goals.map((goal) => (
     <DayGoalView key={goal.id} goal={goal} />
   ))

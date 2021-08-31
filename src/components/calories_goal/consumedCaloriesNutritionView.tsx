@@ -31,8 +31,6 @@ export const ConsumedCaloriesNutritionView: FunctionComponent<ConsumedCaloriesNu
       },
     ] as CaloriesChartData[]
 
-    console.log(caloriesData)
-
     const legend = {
       anchor: 'bottom' as const,
       direction: 'column' as const,
