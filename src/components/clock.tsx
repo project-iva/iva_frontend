@@ -16,7 +16,7 @@ export const Clock: FunctionComponent = () => {
   return (
     <div className={'card card-item'}>
       <div className="card-body text-center">
-        <span className={'display-4'}>{time}</span>
+        <span className={'display-4 font-weight-bold'}>{time}</span>
       </div>
     </div>
   )
