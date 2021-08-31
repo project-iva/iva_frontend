@@ -16,7 +16,7 @@ interface AssetTrackerEntry {
   market_price: number
 }
 
-interface AssetDayPriceChange {
+export interface AssetDayPriceChange {
   asset: Asset
   last_entry: AssetTrackerEntry
   prev_day_last_entry: AssetTrackerEntry
