@@ -4,6 +4,7 @@ import { DayPlanView } from '../components/day_plan/dayPlanView'
 import { DayGoalsView } from '../components/day_goals/dayGoalsView'
 import { CaloriesGoalView } from '../components/calories_goal/caloriesGoalView'
 import { AssetsView } from '../components/assets/assetsView'
+import { BodyMassStatsView } from '../components/bodyMassStatsView'
 
 export const Dashboard: FunctionComponent = () => {
   return (
@@ -13,6 +14,8 @@ export const Dashboard: FunctionComponent = () => {
           <Clock />
           <br />
           <CaloriesGoalView />
+          <br />
+          <BodyMassStatsView />
         </div>
         <div className={'col-5'}>
           <DayPlanView />
