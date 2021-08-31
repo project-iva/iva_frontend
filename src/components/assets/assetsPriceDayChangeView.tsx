@@ -31,7 +31,7 @@ export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeVie
         (dayPriceChange.last_entry.value / assetsTotalValue) * 100
 
       return (
-        <tr>
+        <tr key={dayPriceChange.asset.ticker}>
           <td className={'align-middle'}>
             {dayPriceChange.asset.name} ({dayPriceChange.asset.ticker})
           </td>
