@@ -5,6 +5,8 @@ import { DayGoalsView } from '../components/day_goals/dayGoalsView'
 import { CaloriesGoalView } from '../components/calories_goal/caloriesGoalView'
 import { AssetsView } from '../components/assets/assetsView'
 import { BodyMassStatsView } from '../components/bodyMassStatsView'
+import { WeekSleepStatsView } from '../components/weekSleepStatsView'
+import { WeekMindfulSessionsStatsView } from '../components/weekMindfulSessionsStatsView'
 
 export const Dashboard: FunctionComponent = () => {
   return (
@@ -24,6 +26,10 @@ export const Dashboard: FunctionComponent = () => {
         </div>
         <div className={'col-5'}>
           <DayGoalsView />
+          <br />
+          <WeekSleepStatsView />
+          <br />
+          <WeekMindfulSessionsStatsView />
         </div>
       </div>
     </div>
