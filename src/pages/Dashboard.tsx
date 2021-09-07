@@ -31,7 +31,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
         <div className={'col-5'}>
           <DayPlanView refresher={props.dayPlanRefresher} />
           <br />
-          {/*<AssetsView />*/}
+          <AssetsView />
         </div>
         <div className={'col-5'}>
           <DayGoalsView refresher={props.dayGoalsRefresher} />

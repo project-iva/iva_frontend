@@ -19,15 +19,6 @@ export const AssetsView: FunctionComponent = () => {
     }
   }, [dayPriceChangesStatus, dispatch])
 
-  dayPriceChanges.forEach((dayPriceChange) => {
-    let priceDifference =
-      dayPriceChange.last_entry.market_price -
-      dayPriceChange.prev_day_last_entry.market_price
-    let percentageChange =
-      (priceDifference / dayPriceChange.prev_day_last_entry.market_price) * 100
-    console.log({ dayPriceChange, priceDifference, percentageChange })
-  })
-
   return (
     <div className={'card card-item'}>
       <div className="card-body">
