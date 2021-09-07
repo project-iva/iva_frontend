@@ -3,6 +3,7 @@ import { fetchCaloriesGoal } from '../../store/caloriesGoalSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { CaloriesTrackingView } from './caloriesTrackingView'
 import { ConsumedCaloriesNutritionView } from './consumedCaloriesNutritionView'
+import { RefreshableComponentProps } from '../refreshableComponentProps'
 
 export type CaloriesChartData = {
   id: string
@@ -11,18 +12,15 @@ export type CaloriesChartData = {
   color: string
 }
 
-export const CaloriesGoalView: FunctionComponent = () => {
+export const CaloriesGoalView: FunctionComponent<RefreshableComponentProps> = (
+  props,
+) => {
   const caloriesGoal = useAppSelector((state) => state.caloriesGoal.data)
-  const caloriesGoalStatus = useAppSelector(
-    (state) => state.caloriesGoal.status,
-  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (caloriesGoalStatus === 'idle') {
-      dispatch(fetchCaloriesGoal())
-    }
-  }, [caloriesGoalStatus, dispatch])
+    dispatch(fetchCaloriesGoal())
+  }, [dispatch, props.refresher])
 
   return (
     <div className={'card card-item'}>

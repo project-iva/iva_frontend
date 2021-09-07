@@ -1,8 +1,8 @@
 import { IconName, IconPrefix } from '@fortawesome/fontawesome-common-types'
 
 export enum PresenterSessionType {
-  ROUTINE = 'routine',
-  MEAL_CHOICES = 'meal_choices',
+  ROUTINE = 'ROUTINE',
+  MEAL_CHOICES = 'MEAL_CHOICES',
 }
 
 export interface RoutineStep {

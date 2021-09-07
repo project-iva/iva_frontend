@@ -2,17 +2,17 @@ import React, { FunctionComponent, useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { fetchBodyMassStats } from '../store/bodyMassStatsSlice'
+import { RefreshableComponentProps } from './refreshableComponentProps'
 
-export const BodyMassStatsView: FunctionComponent = () => {
+export const BodyMassStatsView: FunctionComponent<RefreshableComponentProps> = (
+  props,
+) => {
   const stats = useAppSelector((state) => state.bodyMassStats.data)
-  const statsStatus = useAppSelector((state) => state.bodyMassStats.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (statsStatus === 'idle') {
-      dispatch(fetchBodyMassStats())
-    }
-  }, [statsStatus, dispatch])
+    dispatch(fetchBodyMassStats())
+  }, [dispatch, props.refresher])
 
   console.log(stats)
   let weekChange = null

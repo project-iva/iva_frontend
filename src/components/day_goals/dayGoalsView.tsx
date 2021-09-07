@@ -2,17 +2,17 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { fetchDayGoals } from '../../store/dayGoalsSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { DayGoalView } from './dayGoalView'
+import { RefreshableComponentProps } from '../refreshableComponentProps'
 
-export const DayGoalsView: FunctionComponent = () => {
+export const DayGoalsView: FunctionComponent<RefreshableComponentProps> = (
+  props,
+) => {
   const goals = useAppSelector((state) => state.dayGoals.data)
-  const goalsStatus = useAppSelector((state) => state.dayGoals.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (goalsStatus === 'idle') {
-      dispatch(fetchDayGoals())
-    }
-  }, [goalsStatus, dispatch])
+    dispatch(fetchDayGoals())
+  }, [dispatch, props.refresher])
 
   const goalViews = goals.map((goal) => (
     <DayGoalView key={goal.id} goal={goal} />

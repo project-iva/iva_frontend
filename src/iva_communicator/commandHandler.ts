@@ -1,14 +1,18 @@
 import type App from '../App'
-import StartRoutineCommandData from './startRoutineCommandData'
 import { PresenterSessionType, RoutineStep } from './presenterCommands'
 import Presenter from '../components/presenter/presenter'
 import { Meal } from '../shared_models/food'
+import { RefreshableComponentIdentifier } from './refreshableComponentIdentifier'
 
 class CommandHandler {
   private app: App
 
   constructor(app: App) {
     this.app = app
+  }
+
+  refreshComponent(componentIdentifier: RefreshableComponentIdentifier) {
+    this.app.refreshComponent(componentIdentifier)
   }
 
   startMealChoicePresenter(choices: Meal[]) {

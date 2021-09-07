@@ -15,11 +15,18 @@ import { AssetsOverview } from './pages/AssetsOverview'
 import { SettingsModal } from './components/settingsModal'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { RefreshableComponentIdentifier } from './iva_communicator/refreshableComponentIdentifier'
 
 type AppProps = {}
 type AppState = {
   showSettings: boolean
   isPresenter: boolean
+  caloriesRefresher: number
+  bodyMassStatsRefresher: number
+  dayPlanRefresher: number
+  dayGoalsRefresher: number
+  sleepStatsRefresher: number
+  mindfulSessionsStatsRefresher: number
 }
 
 type PresenterReference = React.RefObject<Presenter>
@@ -45,6 +52,12 @@ class App extends Component<AppProps, AppState> {
     this.state = {
       showSettings: false,
       isPresenter: false,
+      caloriesRefresher: 0,
+      bodyMassStatsRefresher: 0,
+      dayPlanRefresher: 0,
+      dayGoalsRefresher: 0,
+      sleepStatsRefresher: 0,
+      mindfulSessionsStatsRefresher: 0,
     }
 
     this.presenters = new Map<PresenterSessionType, PresenterReference>([
@@ -61,6 +74,36 @@ class App extends Component<AppProps, AppState> {
   componentDidMount() {
     if (this.state.isPresenter) {
       this.communicator?.connect()
+    }
+  }
+
+  refreshComponent(componentIdentifier: RefreshableComponentIdentifier) {
+    switch (componentIdentifier) {
+      case RefreshableComponentIdentifier.CALORIES_VIEW:
+        this.setState({ caloriesRefresher: this.state.caloriesRefresher + 1 })
+        break
+      case RefreshableComponentIdentifier.BODY_MASS_VIEW:
+        this.setState({
+          bodyMassStatsRefresher: this.state.bodyMassStatsRefresher + 1,
+        })
+        break
+      case RefreshableComponentIdentifier.DAY_PLAN_VIEW:
+        this.setState({ dayPlanRefresher: this.state.dayPlanRefresher + 1 })
+        break
+      case RefreshableComponentIdentifier.DAY_GOALS_VIEW:
+        this.setState({ dayGoalsRefresher: this.state.dayGoalsRefresher + 1 })
+        break
+      case RefreshableComponentIdentifier.SLEEP_STATS_VIEW:
+        this.setState({
+          sleepStatsRefresher: this.state.sleepStatsRefresher + 1,
+        })
+        break
+      case RefreshableComponentIdentifier.MINDFUL_SESSIONS_STATS_VIEW:
+        this.setState({
+          mindfulSessionsStatsRefresher:
+            this.state.mindfulSessionsStatsRefresher + 1,
+        })
+        break
     }
   }
 

@@ -7,12 +7,7 @@ import {
   StartPresenterCommandData,
 } from './presenterCommands'
 import { Meal } from '../shared_models/food'
-
-interface ExpectedResponse {
-  action: WebSocketMessageAction
-  resolve: (message: WebSocketMessage) => void
-  reject: (error: string) => void
-}
+import { RefreshComponentData } from './refreshableComponentIdentifier'
 
 class IvaCommunicator {
   private commandHandler: CommandHandler
@@ -88,6 +83,13 @@ class IvaCommunicator {
         let sessionType = (message.data as PresenterNavigationActionData)
           .session_type
         this.commandHandler.presenterFinished(sessionType)
+        break
+      }
+
+      case WebSocketMessageAction.REFRESH_COMPONENT: {
+        let componentIdentifier = (message.data as RefreshComponentData)
+          .component_identifier
+        this.commandHandler.refreshComponent(componentIdentifier)
         break
       }
     }

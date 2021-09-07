@@ -2,18 +2,18 @@ import React, { FunctionComponent, useEffect } from 'react'
 import { fetchDayPlanActivities } from '../../store/dayPlanSlice'
 import { DayPlanActivityView } from './dayPlanActivityView'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { RefreshableComponentProps } from '../refreshableComponentProps'
 const Moment = require('moment')
 
-export const DayPlanView: FunctionComponent = () => {
+export const DayPlanView: FunctionComponent<RefreshableComponentProps> = (
+  props,
+) => {
   const activities = useAppSelector((state) => state.dayPlan.data)
-  const activitiesStatus = useAppSelector((state) => state.dayPlan.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (activitiesStatus === 'idle') {
-      dispatch(fetchDayPlanActivities())
-    }
-  }, [activitiesStatus, dispatch])
+    dispatch(fetchDayPlanActivities())
+  }, [dispatch, props.refresher])
 
   const currentTime = new Date()
   const upcomingActivities = activities.filter((activity) => {

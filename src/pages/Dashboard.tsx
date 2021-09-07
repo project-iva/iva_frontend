@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { Clock } from '../components/clock'
 import { DayPlanView } from '../components/day_plan/dayPlanView'
 import { DayGoalsView } from '../components/day_goals/dayGoalsView'
@@ -8,28 +8,39 @@ import { BodyMassStatsView } from '../components/bodyMassStatsView'
 import { WeekSleepStatsView } from '../components/weekSleepStatsView'
 import { WeekMindfulSessionsStatsView } from '../components/weekMindfulSessionsStatsView'
 
-export const Dashboard: FunctionComponent = () => {
+type DashboardProps = {
+  caloriesRefresher: number
+  bodyMassStatsRefresher: number
+  dayPlanRefresher: number
+  dayGoalsRefresher: number
+  sleepStatsRefresher: number
+  mindfulSessionsStatsRefresher: number
+}
+
+export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
   return (
     <div className={'container-fluid'}>
       <div className={'row'}>
         <div className={'col-2'}>
           <Clock />
           <br />
-          <CaloriesGoalView />
+          <CaloriesGoalView refresher={props.caloriesRefresher} />
           <br />
-          <BodyMassStatsView />
+          <BodyMassStatsView refresher={props.bodyMassStatsRefresher} />
         </div>
         <div className={'col-5'}>
-          <DayPlanView />
+          <DayPlanView refresher={props.dayPlanRefresher} />
           <br />
-          <AssetsView />
+          {/*<AssetsView />*/}
         </div>
         <div className={'col-5'}>
-          <DayGoalsView />
+          <DayGoalsView refresher={props.dayGoalsRefresher} />
           <br />
-          <WeekSleepStatsView />
+          <WeekSleepStatsView refresher={props.sleepStatsRefresher} />
           <br />
-          <WeekMindfulSessionsStatsView />
+          <WeekMindfulSessionsStatsView
+            refresher={props.mindfulSessionsStatsRefresher}
+          />
         </div>
       </div>
     </div>
