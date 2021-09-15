@@ -1,8 +1,12 @@
-import React, { FunctionComponent, useEffect } from 'react'
-import { fetchDayPlanActivities } from '../../store/dayPlanSlice'
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import {
+  DayPlanActivity,
+  fetchDayPlanActivities,
+} from '../../store/dayPlanSlice'
 import { DayPlanActivityView } from './dayPlanActivityView'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { RefreshableComponentProps } from '../refreshableComponentProps'
+
 const Moment = require('moment')
 
 export const DayPlanView: FunctionComponent<RefreshableComponentProps> = (
@@ -10,28 +14,57 @@ export const DayPlanView: FunctionComponent<RefreshableComponentProps> = (
 ) => {
   const activities = useAppSelector((state) => state.dayPlan.data)
   const dispatch = useAppDispatch()
+  const [currentActivity, setCurrentActivity] =
+    useState<null | DayPlanActivity>(null)
+
+  const [upcomingActivities, setUpcomingActivities] = useState<
+    DayPlanActivity[]
+  >([])
 
   useEffect(() => {
     dispatch(fetchDayPlanActivities())
   }, [dispatch, props.refresher])
 
-  const currentTime = new Date()
-  const upcomingActivities = activities.filter((activity) => {
-    const activityEndTime = Moment(activity.end_time, 'HH:mm:ss')
-    return activityEndTime > currentTime
-  })
+  useEffect(() => {
+    const currentTime = new Date()
+    const upcomingActivities = activities.filter((activity) => {
+      const activityEndTime = Moment(activity.end_time, 'HH:mm:ss')
+      return activityEndTime > currentTime
+    })
 
-  let currentActivity = null
-  if (
-    upcomingActivities.length > 0 &&
-    Moment(upcomingActivities[0].start_time, 'HH:mm:ss') <= currentTime
-  ) {
-    currentActivity = upcomingActivities.shift()
-  }
+    setCurrentActivity(null)
+    setUpcomingActivities(upcomingActivities)
 
-  const upcomingActivitiesViews = upcomingActivities.map((activity) => (
-    <DayPlanActivityView key={activity.id} activity={activity} />
-  ))
+    if (upcomingActivities.length > 0) {
+      let timer: ReturnType<typeof setTimeout> | null = null
+      let timerMs: number
+
+      if (Moment(upcomingActivities[0].start_time, 'HH:mm:ss') <= currentTime) {
+        const currentActivity = upcomingActivities.shift()!
+        setCurrentActivity(currentActivity)
+        timerMs =
+          Moment(currentActivity.end_time, 'HH:mm:ss').valueOf() -
+          Moment().valueOf()
+      } else {
+        const nextActivity = upcomingActivities[0]
+        timerMs =
+          Moment(nextActivity.start_time, 'HH:mm:ss').valueOf() -
+          Moment().valueOf()
+      }
+      console.log('DayPlanView: settings timer for ' + timerMs)
+      timer = setTimeout(() => {
+        dispatch(fetchDayPlanActivities())
+      }, timerMs + 1000)
+      return () => clearTimeout(timer!)
+    }
+  }, [dispatch, activities])
+
+  // show at most 2 upcoming activities
+  const upcomingActivitiesViews = upcomingActivities
+    .slice(0, 2)
+    .map((activity) => (
+      <DayPlanActivityView key={activity.id} activity={activity} />
+    ))
 
   return (
     <div className={'card card-item'}>
