@@ -145,7 +145,18 @@ class App extends Component<AppProps, AppState> {
             <Route path="/sleep-analyses" component={SleepAnalysesOverview} />
             <Route path="/body-masses" component={BodyMassesOverview} />
             <Route path="/assets" component={AssetsOverview} />
-            <Route path="/" component={Dashboard} />
+            <Route path="/">
+              <Dashboard
+                caloriesRefresher={this.state.caloriesRefresher}
+                bodyMassStatsRefresher={this.state.bodyMassStatsRefresher}
+                dayPlanRefresher={this.state.dayPlanRefresher}
+                dayGoalsRefresher={this.state.dayGoalsRefresher}
+                sleepStatsRefresher={this.state.sleepStatsRefresher}
+                mindfulSessionsStatsRefresher={
+                  this.state.mindfulSessionsStatsRefresher
+                }
+              />
+            </Route>
           </Switch>
         </Router>
         <RoutinePresenter ref={this.routinePresenter} />
