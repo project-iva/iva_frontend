@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { fetchAssetsDayPriceChange } from '../../store/assetsDayPriceChangeSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { AssetsDistributionView } from './assetsDistributionView'
@@ -8,16 +8,17 @@ export const AssetsView: FunctionComponent = () => {
   const dayPriceChanges = useAppSelector(
     (state) => state.assetsDayPriceChange.data,
   )
-  const dayPriceChangesStatus = useAppSelector(
-    (state) => state.assetsDayPriceChange.status,
-  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (dayPriceChangesStatus === 'idle') {
+    dispatch(fetchAssetsDayPriceChange())
+
+    const interval = setInterval(() => {
       dispatch(fetchAssetsDayPriceChange())
-    }
-  }, [dayPriceChangesStatus, dispatch])
+      console.log('ref assets')
+    }, 15 * 60 * 1000) // refresh assets every 15 mins
+    return () => clearInterval(interval)
+  }, [dispatch])
 
   return (
     <div className={'card card-item'}>
