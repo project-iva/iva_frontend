@@ -13,26 +13,26 @@ export const ConsumedCaloriesNutritionView: FunctionComponent<ConsumedCaloriesNu
     const caloriesData = [
       {
         id: 'protein',
-        label: 'Protein',
+        label: `Protein (${parseFloat(props.protein.toFixed(1))}g)`,
         value: props.protein,
         color: 'rgb(253, 90, 96)',
       },
       {
         id: 'fat',
-        label: 'Fat',
+        label: `Fat (${parseFloat(props.fat.toFixed(1))}g)`,
         value: props.fat,
         color: 'rgb(175, 210, 103)',
       },
       {
         id: 'carbs',
-        label: 'Carbs',
+        label: `Carbs (${parseFloat(props.carbs.toFixed(1))}g)`,
         value: props.carbs,
         color: 'rgb(70, 116, 174)',
       },
     ] as CaloriesChartData[]
 
     const legend = {
-      anchor: 'bottom' as const,
+      anchor: 'bottom-left' as const,
       direction: 'column' as const,
       justify: false,
       translateY: 100,
@@ -49,10 +49,11 @@ export const ConsumedCaloriesNutritionView: FunctionComponent<ConsumedCaloriesNu
 
     const chartProps = {
       data: caloriesData,
-      margin: { bottom: 100 },
+      margin: { bottom: 110 },
       enableArcLinkLabels: false,
+      enableArcLabels: false,
       innerRadius: 0.5,
-      padAngle: 0.7,
+      padAngle: 2,
       cornerRadius: 3,
       activeOuterRadiusOffset: 8,
       theme: theme,

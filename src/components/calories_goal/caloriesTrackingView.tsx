@@ -45,7 +45,7 @@ export const CaloriesTrackingView: FunctionComponent<CaloriesTrackingViewProps> 
             fill: 'white',
           }}
         >
-          {props.consumedCalories} / {props.caloriesGoal}
+          {props.consumedCalories.toFixed(2)} / {props.caloriesGoal}
         </text>
       )
     }
