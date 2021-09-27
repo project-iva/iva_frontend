@@ -22,7 +22,7 @@ export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeVie
 
       let priceChangeText = (
         <span className={priceDifference >= 0 ? 'gain-text' : 'loss-text'}>
-          {priceDifference.toFixed(2)}&#128; / {percentageChange.toFixed(2)}
+          {priceDifference.toFixed(2)}€ / {percentageChange.toFixed(2)}
           &#37;
         </span>
       )
@@ -36,11 +36,11 @@ export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeVie
             {dayPriceChange.asset.name} ({dayPriceChange.asset.ticker})
           </td>
           <td className={'align-middle'}>
-            {dayPriceChange.last_entry.value.toFixed(2)}&#128; (
+            {dayPriceChange.last_entry.value.toFixed(2)}€ (
             {assetPercentage.toFixed(2)}&#37;)
           </td>
           <td className={'align-middle'}>
-            {dayPriceChange.last_entry.market_price.toFixed(2)}&#128; (
+            {dayPriceChange.last_entry.market_price.toFixed(2)}€ (
             {priceChangeText})
           </td>
         </tr>

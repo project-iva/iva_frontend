@@ -52,7 +52,7 @@ export const AssetsDistributionView: FunctionComponent<AssetsDistributionViewPro
             fill: 'white',
           }}
         >
-          {assetsTotalValue.toFixed(2)}&#128;
+          {assetsTotalValue.toFixed(2)}€
         </text>
       )
     }
@@ -75,7 +75,7 @@ export const AssetsDistributionView: FunctionComponent<AssetsDistributionViewPro
             assetsTotalValueDifference >= 0 ? 'gain-text' : 'loss-text'
           }
         >
-          {assetsTotalValueDifference.toFixed(2)}&#128; /{' '}
+          {assetsTotalValueDifference.toFixed(2)}€ /{' '}
           {assetsTotalValuePercentageChange.toFixed(2)}&#37;
         </text>
       )
