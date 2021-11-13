@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { fetchAssetsDayPriceChange } from '../../store/assetsDayPriceChangeSlice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { AssetsDistributionView } from './assetsDistributionView'

@@ -8,16 +8,17 @@ type AssetsPriceDayChangeViewProps = {
 export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeViewProps> =
   (props: AssetsPriceDayChangeViewProps) => {
     const assetsTotalValue = props.data.reduce(
-      (sum, dayPriceChange) => sum + dayPriceChange.last_entry.value,
+      (sum, dayPriceChange) => sum + (dayPriceChange.last_entry?.value ?? 0),
       0,
     )
 
     const tableRows = props.data.map((dayPriceChange) => {
       let priceDifference =
-        dayPriceChange.last_entry.market_price -
-        dayPriceChange.prev_day_last_entry.market_price
+        (dayPriceChange.last_entry?.market_price ?? 0) -
+        (dayPriceChange.prev_day_last_entry?.market_price ?? 0)
       let percentageChange =
-        (priceDifference / dayPriceChange.prev_day_last_entry.market_price) *
+        (priceDifference /
+          (dayPriceChange.prev_day_last_entry?.market_price ?? 1)) *
         100
 
       let priceChangeText = (
@@ -28,7 +29,7 @@ export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeVie
       )
 
       let assetPercentage =
-        (dayPriceChange.last_entry.value / assetsTotalValue) * 100
+        ((dayPriceChange.last_entry?.value ?? 0) / assetsTotalValue) * 100
 
       return (
         <tr key={dayPriceChange.asset.ticker}>
@@ -36,11 +37,11 @@ export const AssetsPriceDayChangeView: FunctionComponent<AssetsPriceDayChangeVie
             {dayPriceChange.asset.name} ({dayPriceChange.asset.ticker})
           </td>
           <td className={'align-middle'}>
-            {dayPriceChange.last_entry.value.toFixed(2)}€ (
+            {dayPriceChange.last_entry?.value.toFixed(2)}€ (
             {assetPercentage.toFixed(2)}&#37;)
           </td>
           <td className={'align-middle'}>
-            {dayPriceChange.last_entry.market_price.toFixed(2)}€ (
+            {dayPriceChange.last_entry?.market_price.toFixed(2)}€ (
             {priceChangeText})
           </td>
         </tr>
