@@ -32,9 +32,7 @@ export const fetchWeekMindfulSessionsStats = createAsyncThunk(
   'weekMindfulSessionsStats/fetchWeekMindfulSessionsStats',
   async () => {
     const response = await axios
-      .get(
-        'http://iva-backend.docker.localhost/api/week-mindful-sessions-stats/',
-      )
+      .get(process.env.REACT_APP_BACKEND_URL + '/week-mindful-sessions-stats/')
       .then((res) => res)
     return response.data as StatsData[]
   },

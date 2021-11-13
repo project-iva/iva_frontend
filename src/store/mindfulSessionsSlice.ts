@@ -33,7 +33,7 @@ export const fetchMindfulSessions = createAsyncThunk(
   'mindfulSessions/fetchMindfulSessions',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/grouped-mindful-sessions/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/grouped-mindful-sessions/')
       .then((res) => res)
     return response.data as MindfulSessionsData
   },

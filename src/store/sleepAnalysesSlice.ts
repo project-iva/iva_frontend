@@ -34,7 +34,7 @@ export const fetchSleepAnalyses = createAsyncThunk(
   'sleepAnalyses/fetchSleepAnalyses',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/grouped-sleep-analyses/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/grouped-sleep-analyses/')
       .then((res) => res)
     return response.data as SleepAnalysesData
   },

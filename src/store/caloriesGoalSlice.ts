@@ -36,7 +36,7 @@ export const fetchCaloriesGoal = createAsyncThunk(
   'caloriesGoal/fetchCaloriesGoal',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/calories-goal/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/calories-goal/')
       .then((res) => res)
     return response.data as CaloriesGoal
   },

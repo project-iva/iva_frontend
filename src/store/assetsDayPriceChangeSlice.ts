@@ -38,7 +38,7 @@ export const fetchAssetsDayPriceChange = createAsyncThunk(
   'assetsDayPriceChange/fetchAssetsDayPriceChange',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/assets-day-price-change/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/assets-day-price-change/')
       .then((res) => res)
     return response.data as AssetDayPriceChange[]
   },

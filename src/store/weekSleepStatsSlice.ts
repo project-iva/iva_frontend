@@ -32,7 +32,7 @@ export const fetchWeekSleepStats = createAsyncThunk(
   'weekSleepStats/fetchWeekSleepStats',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/week-sleep-stats/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/week-sleep-stats/')
       .then((res) => res)
     return response.data as StatsData[]
   },

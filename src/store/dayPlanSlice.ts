@@ -30,7 +30,7 @@ export const fetchDayPlanActivities = createAsyncThunk(
   'dayPlan/fetchDayPlanActivities',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/current-day-plan/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/current-day-plan/')
       .then((res) => res)
     return response.data['activities'] as DayPlanActivity[]
   },

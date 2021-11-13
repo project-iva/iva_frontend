@@ -27,7 +27,7 @@ export const fetchBodyMasses = createAsyncThunk(
   'bodyMasses/fetchBodyMasses',
   async () => {
     const response = await axios
-      .get('http://iva-backend.docker.localhost/api/body-masses/')
+      .get(process.env.REACT_APP_BACKEND_URL + '/body-masses/')
       .then((res) => res)
     return response.data as BodyMass[]
   },
