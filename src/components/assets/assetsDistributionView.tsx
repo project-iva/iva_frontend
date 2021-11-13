@@ -15,12 +15,13 @@ type AssetsDistributionViewProps = {
 export const AssetsDistributionView: FunctionComponent<AssetsDistributionViewProps> =
   (props: AssetsDistributionViewProps) => {
     const assetsTotalValue = props.data.reduce(
-      (sum, dayPriceChange) => sum + dayPriceChange.last_entry.value,
+      (sum, dayPriceChange) => sum + (dayPriceChange.last_entry?.value ?? 0),
       0,
     )
 
     const assetsPrevTotalValue = props.data.reduce(
-      (sum, dayPriceChange) => sum + dayPriceChange.prev_day_last_entry.value,
+      (sum, dayPriceChange) =>
+        sum + (dayPriceChange.prev_day_last_entry?.value ?? 0),
       0,
     )
 
@@ -32,7 +33,7 @@ export const AssetsDistributionView: FunctionComponent<AssetsDistributionViewPro
       return {
         id: dayPriceChange.asset.ticker,
         label: dayPriceChange.asset.name,
-        value: dayPriceChange.last_entry.value,
+        value: dayPriceChange.last_entry?.value ?? 0,
       }
     }) as AssetsChartData[]
 
@@ -75,7 +76,7 @@ export const AssetsDistributionView: FunctionComponent<AssetsDistributionViewPro
             assetsTotalValueDifference >= 0 ? 'gain-text' : 'loss-text'
           }
         >
-          {assetsTotalValueDifference.toFixed(2)}€ /{' '}
+          {assetsTotalValueDifference.toFixed(2)}&euro; /{' '}
           {assetsTotalValuePercentageChange.toFixed(2)}&#37;
         </text>
       )

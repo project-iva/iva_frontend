@@ -18,8 +18,8 @@ interface AssetTrackerEntry {
 
 export interface AssetDayPriceChange {
   asset: Asset
-  last_entry: AssetTrackerEntry
-  prev_day_last_entry: AssetTrackerEntry
+  last_entry: AssetTrackerEntry | null
+  prev_day_last_entry: AssetTrackerEntry | null
 }
 
 interface AssetsDayPriceChangeSliceState {
